@@ -20,7 +20,6 @@ Used to look at or fetch data that is already saved.
 find(filter, options)`**: Looks for all items that match your search rule.
 findOne(filter, options)`**: Looks for just the first item that matches your search rule.
 
-
 ---------------------------------------------------------------
 
 
