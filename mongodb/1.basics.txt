@@ -1,0 +1,43 @@
+
+CRUD Operations
+----------------
+
+
+1. Create (Add Data)
+
+Used to add new information to the database.
+
+insertOne(data, options)`**: Adds a single new item.
+insertMany(data, options)`**: Adds multiple new items at once.
+
+--------------------------------------------------------------------
+
+
+2. Read (Find Data)
+
+Used to look at or fetch data that is already saved.
+
+find(filter, options)`**: Looks for all items that match your search rule.
+findOne(filter, options)`**: Looks for just the first item that matches your search rule.
+
+---------------------------------------------------------------
+
+
+3. Update (Change Data)
+
+Used to edit existing data.
+
+updateOne(filter, data, options)`**: Changes the details of the first item it finds.
+updateMany(filter, data, options)`**: Changes the details of all items that match.
+replaceOne(filter, data, options)`**: Completely swaps out an old item with a new one.
+
+--------------------------------------------------------------
+
+4. Delete (Remove Data)
+
+Used to permanently remove information.
+
+deleteOne(filter, options)`**: Deletes the first item it finds.
+deleteMany(filter, options)`**: Deletes all items that match.
+
+---------------------------------------------------------------

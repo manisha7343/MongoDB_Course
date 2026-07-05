@@ -1,0 +1,55 @@
+One-to-One Relationship in MongoDB
+----------------------------------
+
+Definition
+- A one-to-one relationship means one document is connected to only one document in another collection.
+- Each document has only one related document.
+
+Examples
+- One Person → One Car
+- One Student → One ID Card
+- One User → One Profile
+
+Example
+persons Collection
+
+{
+  "_id": ObjectId("6a4a095da314821aa51e2622"),
+  "name": "Manisha",
+  "age": 20,
+  "salary": 20000
+}
+
+car Collection
+
+{
+  "_id": ObjectId("6a4a0ae3a314821aa51e2628"),
+  "model": "BMW",
+  "price": 40000,
+  "owner": ObjectId("6a4a095da314821aa51e2622")
+}
+
+- The owner field stores the _id of the person.
+- This _id creates the relationship between the two collections.
+
+Why use ObjectId?
+
+- Avoids duplicate data.
+- Saves storage.
+- Makes data easy to update.
+- Keeps collections connected.
+- Stores only the reference, not the whole document.
+
+Simple Diagram
+persons                     car
+_id  ------------------>   owner
+name                        model
+age                         price
+salary
+
+Key Points
+- One person owns one car.
+- One car belongs to one person.
+- The owner field stores the person's ObjectId.
+- ObjectId works as a reference between collections.
+- Similar to a Foreign Key in SQL.
