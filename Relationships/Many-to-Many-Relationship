@@ -1,0 +1,30 @@
+Many to Many Relationship
+-------------------------
+
+One document relates to many documents, and those also relate to many others. Example: Students and Courses — one student can take many courses, one course can have many students.
+
+Done using **Referencing** (embedding causes duplicate data on both sides).
+
+```js
+// students collection
+{ _id: "s101", name: "Rahul", courses: ["c201", "c202"] }
+{ _id: "s102", name: "Priya", courses: ["c201"] }
+
+// courses collection
+{ _id: "c201", title: "MongoDB Basics", students: ["s101", "s102"] }
+{ _id: "c202", title: "Node.js", students: ["s101"] }
+```
+
+- Student document stores course IDs.
+- Course document stores student IDs.
+- Both sides reference each other — that's why it's many-to-many.
+
+**Why not embedding?** Data would get duplicated on both sides, and updating becomes messy.
+
+Summary
+
+| Relationship | Best Approach |
+|--------------|---------------|
+| One-to-One   | Embedding     |
+| One-to-Many  | Embedding (small) / Referencing (large) |
+| Many-to-Many | Referencing |

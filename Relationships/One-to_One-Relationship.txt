@@ -1,0 +1,58 @@
+## MongoDB – One to Many Relationship
+
+There are two ways to handle a one-to-many relationship in MongoDB: **Referencing** and **Embedding**.
+
+### 1. Referencing
+
+Here we just store the IDs of the related documents instead of the full data.
+
+Example:
+ ne blog has many comments.
+
+
+// blogs collection
+{
+  _id: "b101",
+  title: "Introduction to MongoDB",
+  author: "Manisha",
+  comments: ["c101", "c102", "c103"]
+}
+
+// comments collection
+{ _id: "c101", text: "Very helpful blog!" }
+{ _id: "c102", text: "Thanks for sharing." }
+{ _id: "c103", text: "Waiting for the next blog." }
+
+
+- Blog document only keeps the comment IDs, actual comments are in a separate collection.
+- Good when there can be a lot of comments.
+- To get comment details, we need to query the comments collection separately (or use lookup).
+
+------------------------------------------------------------------------------------------------------
+
+2. Embedding
+
+Here we store everything inside one single document.
+
+{
+  _id: "b101",
+  title: "Introduction to MongoDB",
+  author: "Manisha",
+  comments: [
+    { text: "Very helpful blog!" },
+    { text: "Thanks for sharing." },
+    { text: "Waiting for the next blog." }
+  ]
+}
+
+
+- All comments live inside the blog document itself.
+- One query gets everything, so it's faster to read.
+- Good only when comments are limited in number, otherwise the document becomes too big (16MB limit issue).
+
+When to use what?
+
+- Small, fixed amount of related data → **Embed**
+- Large or constantly growing data → **Reference**
+
+That's basically it. Referencing = data split across collections, connected by IDs. Embedding = data kept together in one document.
