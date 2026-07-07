@@ -1,0 +1,30 @@
+1. NoSQL vs SQL 
+----------------
+- Table - collection
+- Row - document
+- Column - field
+- Schema - Schema
+- Table formate - Json-like
+- joins - embedding
+
+MongoDB Architecture
+--------------------
+Database → Collection → Document → Field
+
+BSON Format 
+-----------
+- MongoDB data ko store karta hai BSON (Binary JSON) format mein, JSON nahi.
+- Jab tum mongosh ya code mein data dekhte ho, woh JSON jaisa lagta hai — lekin disk pe woh BSON (binary) mein store hota hai.
+
+
+_id Field aur ObjectId Kya Hota Hai
+-------------------------------------
+
+- Har MongoDB document mein automatically ek _id field hota hai
+- yeh SQL ke Primary Key jaisa hai.
+- Agar tum khud _id nahi doge, MongoDB automatically ek unique ObjectId generate kar dega.
+- first 4 bytes = Timestamps 
+- next 5 = Rnado value(machine + process unique)
+- akhri 3 bytes = INcreament counter
+
+ 
