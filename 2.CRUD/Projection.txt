@@ -1,4 +1,5 @@
 PROJECTION
+----------
 find() takes a second argument to choose which fields to return. 1 includes a field, 0 excludes it. You can't mix include and exclude, except _id which is always allowed since it's included by default.
 db.customers.find({}, { name: 1, city: 1 })
 db.customers.find({}, { email: 0 })

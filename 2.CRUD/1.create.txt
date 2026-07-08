@@ -1,4 +1,5 @@
 1. CREATE — Inserting Data
+-------------------------
 Theory:
 Adding new data into MongoDB is called an "insert" operation. There are two methods:
 

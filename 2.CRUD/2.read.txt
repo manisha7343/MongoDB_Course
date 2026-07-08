@@ -1,4 +1,5 @@
 2. READ — Fetching Data
+-------------------------
 Theory:
 Read is the most frequently used operation, because data is written once but read many times.
 MongoDB gives two main methods:
