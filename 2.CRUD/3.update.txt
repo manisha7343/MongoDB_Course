@@ -1,9 +1,9 @@
 3. UPDATE
 
-1...updateOne()
+1...updateOne({condition}, {update-first-match-only})
 updates the first matching document. 
 
-2...updateMany() 
+2...updateMany({condition}, {update all matched document}) 
 updates all matching documents. replaceOne() replaces the whole document except _id.
 You must use an update operator like $set. If you skip it, MongoDB treats your object as a full replacement and deletes all other existing fields — a common mistake.
 
