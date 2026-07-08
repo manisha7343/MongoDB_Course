@@ -1,0 +1,22 @@
+1. CREATE — Inserting Data
+Theory:
+Adding new data into MongoDB is called an "insert" operation. There are two methods:
+
+insertOne() — inserts a single document
+insertMany() — inserts multiple documents at once (passed as an array)
+
+If you don't provide an _id field when inserting, MongoDB automatically generates a unique ObjectId and adds it as _id. This _id field must be unique in every document, just like a Primary Key in SQL. If you provide your own _id and it already exists, MongoDB will throw a duplicate key error.
+Ordered vs Unordered Insert:
+By default, insertMany() is "ordered" — documents are inserted one by one in sequence. If one document fails in the middle (for example, duplicate _id), all the documents after it will NOT be inserted.
+If you want the remaining documents to still get inserted even if one fails, use { ordered: false }.
+
+Example:
+db.customers.insertMany([...], { ordered: false })
+Acknowledgement: After an insert completes, MongoDB sends back a confirmation showing whether the operation was successful and how many documents got inserted. This matters in real systems to confirm the data was actually saved.
+Basic example:
+db.customers.insertOne({ name: "Rahul", age: 25, city: "Mumbai" })
+
+db.customers.insertMany([
+  { name: "Priya", age: 22, city: "Delhi" },
+  { name: "Aman", age: 30, city: "Pune" }
+])

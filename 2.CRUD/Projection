@@ -1,0 +1,9 @@
+PROJECTION
+find() takes a second argument to choose which fields to return. 1 includes a field, 0 excludes it. You can't mix include and exclude, except _id which is always allowed since it's included by default.
+db.customers.find({}, { name: 1, city: 1 })
+db.customers.find({}, { email: 0 })
+
+SORT, LIMIT, SKIP
+sort() orders results — 1 for ascending, -1 for descending. Fast if the field has an index, slower otherwise since MongoDB sorts in memory.
+limit() returns only a set number of results. skip() skips a number of documents from the start, usually combined with limit() for pagination.
+skip() gets slow on very large page numbers because MongoDB still has to go through the skipped documents internally, even without returning them.

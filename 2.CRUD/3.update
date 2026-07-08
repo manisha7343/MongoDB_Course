@@ -1,0 +1,23 @@
+3. UPDATE
+
+1...updateOne() updates the first matching document. updateMany() updates all matching documents. replaceOne() replaces the whole document except _id.
+You must use an update operator like $set. If you skip it, MongoDB treats your object as a full replacement and deletes all other existing fields — a common mistake.
+
+$set = sets or updates a field's value
+$unset = removes a field
+$inc = increments/decrements a number
+$rename = renames a field
+$push = adds an element to an array
+$pull = removes matching elements from an array
+$addToSet = adds to an array only if not already present
+Upsert means "update if it exists, insert if it doesn't." Use upsert: true:
+
+upsert Example: 
+db.customers.updateOne(
+  { name: "Rohan" },
+  { $set: { age: 28 } },
+  { upsert: true }
+)
+Example:
+db.customers.updateOne({ name: "Rahul" }, { $set: { age: 26 } })
+db.customers.updateMany({ city: "Mumbai" }, { $inc: { age: 1 } })

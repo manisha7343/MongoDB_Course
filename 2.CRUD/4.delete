@@ -1,0 +1,10 @@
+4. DELETE
+
+1...deleteOne() deletes the first matching document. deleteMany() deletes all matching documents.
+
+2...deleteMany({}) deletes all documents but keeps the collection itself. That's different from dropping the collection entirely.
+Delete is irreversible — there's no built-in undo. Best practice is to run find() with the same condition first to confirm what will be deleted.
+
+Example:
+db.customers.deleteOne({ name: "Rahul" })
+db.customers.deleteMany({ city: "Mumbai" })

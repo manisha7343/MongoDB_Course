@@ -1,0 +1,15 @@
+2. READ — Fetching Data
+Theory:
+Read is the most frequently used operation, because data is written once but read many times.
+MongoDB gives two main methods:
+
+find() — returns a "cursor", which is like a pointer to the matching documents. MongoDB doesn't load all the data into memory at once — it sends data in batches, which helps performance with large datasets.
+findOne() — returns a single document (an object), not a cursor. It returns the first matching document, or null if nothing matches.
+
+Query Document: The condition you write inside find() is called a "query document." If it's empty {}, all documents match — similar to SQL's SELECT *.
+How filtering works internally: When MongoDB runs a query, it first checks if there's an index on that field. If an index exists, MongoDB can find matching documents quickly. If there's no index, MongoDB does a "collection scan" — checking every single document one by one, which is slow on large datasets. This is why creating indexes on frequently queried fields is a best practice.
+
+Basic example:
+db.customers.find()
+db.customers.find({ city: "Mumbai" })
+db.customers.findOne({ name: "Rahul" })

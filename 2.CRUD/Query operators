@@ -1,0 +1,41 @@
+QUERY OPERATORS
+------------------
+1...Comparison operators — used to compare a field's value.
+
+$eq = equal to
+$ne = not equal to
+$gt = greater than
+$gte = greater than or equal
+$lt = less than
+$lte = less than or equal
+$in = value is in a given list
+$nin = value is not in a given list
+$eq is rarely written directly since { field: value } already means the same thing. You need it explicitly only when combining multiple conditions, like a range:
+{ age: { $gte: 20, $lte: 30 } }
+$in and $nin check against a list of values so you don't have to write multiple $or conditions.
+
+2...Logical operators — used to combine conditions.
+
+$and = all conditions must be true
+$or = at least one condition must be true
+$not = negates a condition
+$nor = none of the conditions should be true
+A comma between conditions already behaves like $and:
+{ city: "Mumbai", age: { $gt: 20 } }
+You only need $and explicitly when you have two different conditions on the same field, or when nesting inside $or.
+
+3...Element operators — check if a field exists or its type.
+
+$exists = checks whether a field is present (true/false)
+$type = checks the BSON data type of a field
+Useful because MongoDB has a flexible schema, so not every document has the same fields.
+
+4...Evaluation operators
+
+$regex = pattern matching, like SQL's LIKE. Case-sensitive by default, add $options: "i" for case-insensitive.
+$expr = lets you compare two fields within the same document (normal operators only compare a field to a fixed value).
+$mod = checks the remainder of a division.
+Array operators — used when a field is an array.
+$all = array must contain all given values
+$size = array length must match exactly
+$elemMatch = at least one array element must satisfy all the given conditions together
