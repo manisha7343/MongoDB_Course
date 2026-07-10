@@ -39,3 +39,199 @@ Array operators — used when a field is an array.
 $all = array must contain all given values
 $size = array length must match exactly
 $elemMatch = at least one array element must satisfy all the given conditions together
+
+######################################################################
+SampleData --------
+[
+  {
+    _id: ObjectId('6a4febae4bc8f4ac771e2621'),
+    name: 'Rahul',
+    age: 20,
+    city: 'Mumbai',
+    marks: 85,
+    course: 'BSc IT',
+    hobbies: [ 'Cricket', 'Coding' ],
+    subjects: [ { name: 'Math', marks: 90 }, { name: 'Java', marks: 80 } ]
+  },
+  {
+    _id: ObjectId('6a4febae4bc8f4ac771e2622'),
+    name: 'Priya',
+    age: 23,
+    city: 'Delhi',
+    marks: 72,
+    course: 'BCA',
+    hobbies: [ 'Reading', 'Coding' ],
+    subjects: [ { name: 'Math', marks: 60 }, { name: 'Java', marks: 88 } ]
+  },
+  {
+    _id: ObjectId('6a4febae4bc8f4ac771e2623'),
+    name: 'Amit',
+    age: 18,
+    city: 'Pune',
+    marks: 91,
+    hobbies: [ 'Football', 'Gaming' ],
+    subjects: [ { name: 'Math', marks: 95 }, { name: 'Java', marks: 70 } ]
+  }
+]
+------------------------
+MongoDB Query Operators
+
+1. Comparison Operators
+
+$eq (Equal To)
+
+Syntax
+
+    db.collection.find({
+      field: { $eq: value }
+    });
+
+Example
+
+    db.students.find({
+      age: { $eq: 20 }
+    });
+
+Meaning
+
+Returns documents where age = 20.
+
+------------------------------------------------------------------------
+
+$ne (Not Equal To)
+
+Syntax
+
+    db.collection.find({
+      field: { $ne: value }
+    });
+
+Example
+
+    db.students.find({
+      city: { $ne: "Mumbai" }
+    });
+
+Meaning
+
+Returns documents where city is NOT Mumbai.
+
+------------------------------------------------------------------------
+
+$gt (Greater Than)
+
+Syntax
+
+    db.collection.find({
+      field: { $gt: value }
+    });
+
+Example
+
+    db.students.find({
+      marks: { $gt: 80 }
+    });
+
+Meaning
+
+Returns documents where marks are greater than 80.
+
+------------------------------------------------------------------------
+
+$gte (Greater Than or Equal To)
+
+Syntax
+
+    db.collection.find({
+      field: { $gte: value }
+    });
+
+Example
+
+    db.students.find({
+      age: { $gte: 20 }
+    });
+
+Meaning
+
+Returns documents where age is greater than or equal to 20.
+
+------------------------------------------------------------------------
+
+$lt (Less Than)
+
+Syntax
+
+    db.collection.find({
+      field: { $lt: value }
+    });
+
+Example
+
+    db.students.find({
+      age: { $lt: 20 }
+    });
+
+Meaning
+
+Returns documents where age is less than 20.
+
+------------------------------------------------------------------------
+
+$lte (Less Than or Equal To)
+
+Syntax
+
+    db.collection.find({
+      field: { $lte: value }
+    });
+
+Example
+
+    db.students.find({
+      marks: { $lte: 75 }
+    });
+
+Meaning
+
+Returns documents where marks are less than or equal to 75.
+
+------------------------------------------------------------------------
+
+$in
+
+Syntax
+
+    db.collection.find({
+      field: { $in: [value1, value2] }
+    });
+
+Example
+
+    db.students.find({
+      city: { $in: ["Mumbai", "Delhi"] }
+    });
+
+Meaning
+
+Returns documents where city is Mumbai or Delhi.
+
+------------------------------------------------------------------------
+
+$nin
+
+Syntax
+
+    db.collection.find({
+      field: { $nin: [value1, value2] }
+    });
+
+Example
+
+    db.students.find({
+      city: { $nin: ["Mumbai", "Delhi"] }
+    });
+
+Meaning
+
+Returns documents where city is neither Mumbai nor Delhi.
