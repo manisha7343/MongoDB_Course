@@ -10,6 +10,7 @@ $lt = less than
 $lte = less than or equal
 $in = value is in a given list
 $nin = value is not in a given list
+
 $eq is rarely written directly since { field: value } already means the same thing. You need it explicitly only when combining multiple conditions, like a range:
 { age: { $gte: 20, $lte: 30 } }
 $in and $nin check against a list of values so you don't have to write multiple $or conditions.
@@ -35,7 +36,9 @@ Useful because MongoDB has a flexible schema, so not every document has the same
 $regex = pattern matching, like SQL's LIKE. Case-sensitive by default, add $options: "i" for case-insensitive.
 $expr = lets you compare two fields within the same document (normal operators only compare a field to a fixed value).
 $mod = checks the remainder of a division.
-Array operators — used when a field is an array.
+
+
+5...Array operators — used when a field is an array.
 $all = array must contain all given values
 $size = array length must match exactly
 $elemMatch = at least one array element must satisfy all the given conditions together
@@ -233,5 +236,6 @@ Example
     });
 
 Meaning
-
 Returns documents where city is neither Mumbai nor Delhi.
+
+
