@@ -1,0 +1,614 @@
+QUERY OPERATORS
+------------------
+1...Comparison operators — used to compare a field's value.
+
+$eq = equal to
+$ne = not equal to
+$gt = greater than
+$gte = greater than or equal
+$lt = less than
+$lte = less than or equal
+$in = value is in a given list
+$nin = value is not in a given list
+$eq is rarely written directly since { field: value } already means the same thing. You need it explicitly only when combining multiple conditions, like a range:
+{ age: { $gte: 20, $lte: 30 } }
+$in and $nin check against a list of values so you don't have to write multiple $or conditions.
+
+2...Logical operators — used to combine conditions.
+
+$and = all conditions must be true
+$or = at least one condition must be true
+$not = negates a condition
+$nor = none of the conditions should be true
+A comma between conditions already behaves like $and:
+{ city: "Mumbai", age: { $gt: 20 } }
+You only need $and explicitly when you have two different conditions on the same field, or when nesting inside $or.
+
+3...Element operators — check if a field exists or its type.
+
+$exists = checks whether a field is present (true/false)
+$type = checks the BSON data type of a field
+Useful because MongoDB has a flexible schema, so not every document has the same fields.
+
+4...Evaluation operators
+
+$regex = pattern matching, like SQL's LIKE. Case-sensitive by default, add $options: "i" for case-insensitive.
+$expr = lets you compare two fields within the same document (normal operators only compare a field to a fixed value).
+$mod = checks the remainder of a division.
+
+
+5...Array operators — used when a field is an array.
+$all = array must contain all given values
+$size = array length must match exactly
+$elemMatch = at least one array element must satisfy all the given conditions together
+
+
+
+
+################################################## comparision operator ##################################################################################
+SampleData ----------------------
+[
+  {
+    _id: ObjectId('6a4febae4bc8f4ac771e2621'),
+    name: 'Rahul',
+    age: 20,
+    city: 'Mumbai',
+    marks: 85,
+    course: 'BSc IT',
+    hobbies: [ 'Cricket', 'Coding' ],
+    subjects: [ { name: 'Math', marks: 90 }, { name: 'Java', marks: 80 } ]
+  },
+  {
+    _id: ObjectId('6a4febae4bc8f4ac771e2622'),
+    name: 'Priya',
+    age: 23,
+    city: 'Delhi',
+    marks: 72,
+    course: 'BCA',
+    hobbies: [ 'Reading', 'Coding' ],
+    subjects: [ { name: 'Math', marks: 60 }, { name: 'Java', marks: 88 } ]
+  },
+  {
+    _id: ObjectId('6a4febae4bc8f4ac771e2623'),
+    name: 'Amit',
+    age: 18,
+    city: 'Pune',
+    marks: 91,
+    hobbies: [ 'Football', 'Gaming' ],
+    subjects: [ { name: 'Math', marks: 95 }, { name: 'Java', marks: 70 } ]
+  }
+]
+---------------------------------
+MongoDB Query Operators
+
+1. Comparison Operators
+
+$eq (Equal To)
+
+Syntax
+
+    db.collection.find({
+      field: { $eq: value }
+    });
+
+Example
+
+    db.students.find({
+      age: { $eq: 20 }
+    });
+
+Meaning
+
+Returns documents where age = 20.
+
+------------------------------------------------------------------------
+
+$ne (Not Equal To)
+
+Syntax
+
+    db.collection.find({
+      field: { $ne: value }
+    });
+
+Example
+
+    db.students.find({
+      city: { $ne: "Mumbai" }
+    });
+
+Meaning
+
+Returns documents where city is NOT Mumbai.
+
+------------------------------------------------------------------------
+
+$gt (Greater Than)
+
+Syntax
+
+    db.collection.find({
+      field: { $gt: value }
+    });
+
+Example
+
+    db.students.find({
+      marks: { $gt: 80 }
+    });
+
+Meaning
+
+Returns documents where marks are greater than 80.
+
+------------------------------------------------------------------------
+
+$gte (Greater Than or Equal To)
+
+Syntax
+
+    db.collection.find({
+      field: { $gte: value }
+    });
+
+Example
+
+    db.students.find({
+      age: { $gte: 20 }
+    });
+
+Meaning
+
+Returns documents where age is greater than or equal to 20.
+
+------------------------------------------------------------------------
+
+$lt (Less Than)
+
+Syntax
+
+    db.collection.find({
+      field: { $lt: value }
+    });
+
+Example
+
+    db.students.find({
+      age: { $lt: 20 }
+    });
+
+Meaning
+
+Returns documents where age is less than 20.
+
+------------------------------------------------------------------------
+
+$lte (Less Than or Equal To)
+
+Syntax
+
+    db.collection.find({
+      field: { $lte: value }
+    });
+
+Example
+
+    db.students.find({
+      marks: { $lte: 75 }
+    });
+
+Meaning
+
+Returns documents where marks are less than or equal to 75.
+
+------------------------------------------------------------------------
+
+$in
+
+Syntax
+
+    db.collection.find({
+      field: { $in: [value1, value2] }
+    });
+
+Example
+
+    db.students.find({
+      city: { $in: ["Mumbai", "Delhi"] }
+    });
+
+Meaning
+
+Returns documents where city is Mumbai or Delhi.
+
+------------------------------------------------------------------------
+
+$nin
+
+Syntax
+
+    db.collection.find({
+      field: { $nin: [value1, value2] }
+    });
+
+Example
+
+    db.students.find({
+      city: { $nin: ["Mumbai", "Delhi"] }
+    });
+
+Meaning
+Returns documents where city is neither Mumbai nor Delhi.
+
+############################################################# Logical operators #################################################################################################
+
+
+MongoDB Logical Operators
+
+1. $and (All conditions must be true)
+
+Syntax
+
+db.students.find({
+  $and: [
+    { condition1 },
+    { condition2 }
+  ]
+});
+
+Example
+
+db.students.find({
+  $and: [
+    { city: "Mumbai" },
+    { age: { $gt: 18 } }
+  ]
+});
+
+Meaning
+
+Returns documents where city is Mumbai AND age is greater than 18.
+
+------------------------------------------------------------------------
+
+2. $or (At least one condition must be true)
+
+Syntax
+
+db.students.find({
+  $or: [
+    { condition1 },
+    { condition2 }
+  ]
+});
+
+Example
+
+db.students.find({
+  $or: [
+    { city: "Mumbai" },
+    { marks: { $gt: 90 } }
+  ]
+});
+
+Meaning
+
+Returns documents where city is Mumbai OR marks are greater than 90.
+
+------------------------------------------------------------------------
+
+3. $not (Negates a condition)
+
+Syntax
+
+db.students.find({
+  field: {
+    $not: { operator: value }
+  }
+});
+
+Example
+
+db.students.find({
+  age: {
+    $not: { $gt: 20 }
+  }
+});
+
+Meaning
+
+Returns documents where age is NOT greater than 20 (age ≤ 20).
+
+------------------------------------------------------------------------
+
+4. $nor (None of the conditions should be true)
+
+Syntax
+
+db.students.find({
+  $nor: [
+    { condition1 },
+    { condition2 }
+  ]
+});
+
+Example
+
+db.students.find({
+  $nor: [
+    { city: "Mumbai" },
+    { marks: { $gt: 90 } }
+  ]
+});
+
+Meaning
+
+Returns documents where city is NOT Mumbai AND marks are NOT greater than 90.
+
+------------------------------------------------------------------------
+
+Implicit $and (Using Comma)
+
+Syntax
+
+db.students.find({
+  condition1,
+  condition2
+});
+
+Example
+
+db.students.find({
+  city: "Mumbai",
+  age: { $gt: 18 }
+});
+
+Meaning
+
+A comma between conditions automatically behaves like $and. This returns documents where city is Mumbai AND age is greater than 18.
+
+Note
+
+You usually don't need to use $and because MongoDB automatically treats multiple conditions as AND. Use $and mainly when applying multiple conditions to the same field or when nesting conditions inside operators like $or.
+
+
+############################################################ Element Operator #########################################################################################
+
+MongoDB Element Operators
+
+1. $exists (Checks whether a field exists)
+
+Syntax
+
+db.students.find({
+  field: { $exists: true }
+});
+
+db.students.find({
+  field: { $exists: false }
+});
+
+Example
+
+db.students.find({
+  course: { $exists: true }
+});
+
+db.students.find({
+  course: { $exists: false }
+});
+
+Meaning
+
+The first query returns documents where the course field exists.
+The second query returns documents where the course field does not exist.
+
+------------------------------------------------------------------------
+
+2. $type (Checks the BSON data type of a field)
+
+Syntax
+
+db.students.find({
+  field: { $type: "datatype" }
+});
+
+Example
+
+db.students.find({
+  age: { $type: "int" }
+});
+
+Meaning
+
+Returns documents where the age field is of BSON type int.
+
+------------------------------------------------------------------------
+
+Common BSON Data Types
+
+"double"   = Double
+"string"   = String
+"object"   = Embedded Document
+"array"    = Array
+"bool"     = Boolean
+"date"     = Date
+"null"     = Null
+"int"      = 32-bit Integer
+"long"     = 64-bit Integer
+"objectId" = ObjectId
+
+------------------------------------------------------------------------
+
+Note
+
+Element operators are useful because MongoDB has a flexible schema, so different documents may have different fields and data types.
+
+######################################################### Evaluation Operators ###########################################################################################
+
+MongoDB Evaluation Operators
+
+1. $regex (Pattern Matching)
+
+Syntax
+
+db.students.find({
+  field: { $regex: "pattern" }
+});
+
+Case-Insensitive Syntax
+
+db.students.find({
+  field: {
+    $regex: "pattern",
+    $options: "i"
+  }
+});
+
+Example
+
+db.students.find({
+  name: { $regex: "^R" }
+});
+
+Case-Insensitive Example
+
+db.students.find({
+  name: {
+    $regex: "^r",
+    $options: "i"
+  }
+});
+
+Meaning
+
+The first query returns documents where the name starts with "R".
+The second query does the same but ignores uppercase and lowercase letters.
+
+------------------------------------------------------------------------
+
+2. $expr (Compares Two Fields in the Same Document)
+
+Syntax
+
+db.students.find({
+  $expr: {
+    operator: ["$field1", "$field2"]
+  }
+});
+
+Example
+
+db.students.find({
+  $expr: {
+    $gt: ["$marks", "$age"]
+  }
+});
+
+Meaning
+
+Returns documents where the value of marks is greater than the value of age.
+
+------------------------------------------------------------------------
+
+3. $mod (Checks the Remainder of Division)
+
+Syntax
+
+db.students.find({
+  field: { $mod: [divisor, remainder] }
+});
+
+Example
+
+db.students.find({
+  age: { $mod: [2, 0] }
+});
+
+Meaning
+
+Returns documents where age is divisible by 2 (even numbers).
+
+------------------------------------------------------------------------
+
+Note
+
+Evaluation operators are used for pattern matching, comparing fields within the same document, and performing calculations like checking the remainder after division.
+
+####################################################### Array Operator #########################################################################################
+
+MongoDB Array Operators
+
+1. $all (Array Must Contain All Given Values)
+
+Syntax
+
+db.students.find({
+  field: { $all: [value1, value2] }
+});
+
+Example
+
+db.students.find({
+  hobbies: { $all: ["Cricket", "Coding"] }
+});
+
+Meaning
+
+Returns documents where the hobbies array contains both "Cricket" and "Coding".
+
+------------------------------------------------------------------------
+
+2. $size (Array Length Must Match Exactly)
+
+Syntax
+
+db.students.find({
+  field: { $size: number }
+});
+
+Example
+
+db.students.find({
+  hobbies: { $size: 2 }
+});
+
+Meaning
+
+Returns documents where the hobbies array contains exactly 2 elements.
+
+------------------------------------------------------------------------
+
+3. $elemMatch (At Least One Array Element Must Match All Conditions)
+
+Syntax
+
+db.students.find({
+  field: {
+    $elemMatch: {
+      condition1,
+      condition2
+    }
+  }
+});
+
+Example
+
+db.students.find({
+  subjects: {
+    $elemMatch: {
+      name: "Math",
+      marks: { $gt: 90 }
+    }
+  }
+});
+
+Meaning
+
+Returns documents where at least one element in the subjects array has name = "Math" AND marks greater than 90.
+
+------------------------------------------------------------------------
+
+Note
+
+Array operators are used to query array fields. They help check whether an array contains specific values, has a certain number of elements, or contains an element that satisfies multiple conditions.
