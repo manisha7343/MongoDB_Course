@@ -1,4 +1,3 @@
-
 1. Projection
     - Include Fields
     - Exclude Fields
@@ -79,3 +78,8 @@
     - CRUD with Mongoose
     - populate()
     - Middleware
+
+    need to learn ----
+    $expr
+    $elemMatch
+    regex
